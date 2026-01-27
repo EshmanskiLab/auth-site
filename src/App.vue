@@ -1,30 +1,62 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import VisitBackground from './components/VisitBackground.vue';
+import LoginSidebar from './components/LoginSidebar.vue';
+import { onMounted, ref } from 'vue';
+
+const isMobile = ref(false)
+
+onMounted(() => {
+  isMobile.value = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+});
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="app">
+    <div class="login-view">
+      <div class="main">
+        <VisitBackground />
+      </div>
+
+      <div v-if="!isMobile" class="sidebar">
+        <LoginSidebar />
+      </div>
+    </div>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+<style lang="less" scoped>
+.app {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+.login-view {
+  display: flex;
+
+  width: 100%;
+  height: 100%;
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+.main {
+  flex-grow: 1;
+}
+
+.sidebar {
+  width: 400px;
+}
+
+@media (max-width: 1200px) {
+  .sidebar {
+      width: 300px;
+      font-size: 14px;
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+      width: 200px;
+      font-size: 12px;
+  }
 }
 </style>
